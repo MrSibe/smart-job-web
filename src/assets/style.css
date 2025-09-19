@@ -1,0 +1,53 @@
+/* 全局样式 */
+:root {
+  --primary: #2c3e50;
+  --secondary: #42b983;
+  --light: #f8f9fa;
+  --dark: #34495e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', Arial, 'Microsoft YaHei', sans-serif;
+
+}
+body{
+  background-image: url('@/assets/back.png');
+}
+/*body {*/
+/*  background: var(--light);*/
+/*  margin-top: 40px;*/
+/*  margin-bottom: 40px;*/
+/*  margin-right: 150px;*/
+/*  margin-left: 150px;*/
+/*  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);*/
+/*  background-image: url('@/assets/back.png');*/
+/*  !* 修改为 auto 以保持图片原始尺寸 *!*/
+/*  background-size: auto;*/
+/*  !* 修改为 repeat 以实现平铺 *!*/
+/*  background-repeat: repeat;*/
+/*  background-attachment: fixed;*/
+/*  position: relative;*/
+/*}*/
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.flex-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+ .flex-layout {
+    grid-template-columns: 1fr;
+  }
+}
