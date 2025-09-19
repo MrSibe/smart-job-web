@@ -10,7 +10,7 @@
           </div>
         </div>
       </template>
-      
+
       <!-- 搜索条件 -->
       <el-form :model="searchForm" label-width="80px" class="search-form">
         <el-row :gutter="20">
@@ -37,7 +37,7 @@
           </el-col>
         </el-row>
       </el-form>
-      
+
       <!-- 岗位列表 -->
       <el-table :data="jobList" v-loading="loading" style="width: 100%" border>
         <el-table-column prop="id" label="岗位编号" width="180" />
@@ -60,7 +60,7 @@
           </template>
         </el-table-column>
       </el-table>
-      
+
       <!-- 分页 -->
       <el-pagination
         v-model:current-page="pagination.currentPage"
@@ -73,9 +73,14 @@
         class="pagination"
       />
     </el-card>
-    
+
     <!-- 岗位编辑对话框 -->
-    <el-dialog :title="dialogTitle" v-model="dialogVisible" width="600px" @close="handleDialogClose">
+    <el-dialog
+      :title="dialogTitle"
+      v-model="dialogVisible"
+      width="600px"
+      @close="handleDialogClose"
+    >
       <el-form :model="jobForm" :rules="jobFormRules" ref="jobFormRef" label-width="100px">
         <el-form-item label="岗位名称" prop="name">
           <el-input v-model="jobForm.name" />
@@ -90,10 +95,16 @@
           <el-input v-model="jobForm.salary" />
         </el-form-item>
         <el-form-item label="岗位类型" prop="job_type">
-          <el-input v-model="jobForm.job_type" placeholder="请输入岗位类型，如：全职、兼职、实习、远程等" />
+          <el-input
+            v-model="jobForm.job_type"
+            placeholder="请输入岗位类型，如：全职、兼职、实习、远程等"
+          />
         </el-form-item>
         <el-form-item label="学历要求" prop="education_required">
-          <el-input v-model="jobForm.education_required" placeholder="请输入学历要求，如：不限、大专、本科、硕士、博士等" />
+          <el-input
+            v-model="jobForm.education_required"
+            placeholder="请输入学历要求，如：不限、大专、本科、硕士、博士等"
+          />
         </el-form-item>
         <el-form-item label="岗位标签" prop="tags">
           <el-input v-model="jobForm.tags" placeholder="请输入岗位标签，如：Java,Spring,后端" />
@@ -138,7 +149,7 @@
         title="请粘贴JSON格式的岗位数据，支持单个对象或对象数组"
         type="info"
         :closable="false"
-        style="margin-bottom: 20px;"
+        style="margin-bottom: 20px"
       />
       <el-input
         v-model="batchJsonData"
@@ -149,7 +160,9 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="showBatchDialog = false">取消</el-button>
-          <el-button type="primary" @click="handleBatchAdd" :loading="batchLoading">批量新增</el-button>
+          <el-button type="primary" @click="handleBatchAdd" :loading="batchLoading"
+            >批量新增</el-button
+          >
         </span>
       </template>
     </el-dialog>
@@ -226,7 +239,7 @@ const fetchJobList = async () => {
       companyName: searchForm.companyName,
       location: searchForm.location
     }
-    
+
     // 使用正确的API路径
     const response = await request.get('/jobs', { params })
     if (response.code === '200') {
@@ -276,7 +289,7 @@ const handleAdd = () => {
   dialogTitle.value = '新增岗位'
   isEdit.value = false
   // 重置表单
-  Object.keys(jobForm).forEach(key => {
+  Object.keys(jobForm).forEach((key) => {
     jobForm[key] = ''
   })
   jobForm.is_active = 1
@@ -288,7 +301,7 @@ const handleEdit = (row) => {
   dialogTitle.value = '编辑岗位'
   isEdit.value = true
   // 填充表单数据
-  Object.keys(jobForm).forEach(key => {
+  Object.keys(jobForm).forEach((key) => {
     // 特别处理is_active字段，将Boolean值转换为数字
     if (key === 'is_active') {
       jobForm[key] = row.isActive ? 1 : 0
@@ -311,44 +324,42 @@ const handleEdit = (row) => {
 
 // 处理删除
 const handleDelete = (row) => {
-  ElMessageBox.confirm(
-    `确定要删除岗位 "${row.name}" 吗？`,
-    '确认删除',
-    {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }
-  ).then(async () => {
-    try {
-      // 修正API路径，移除/admin前缀
-      const response = await request.delete(`/jobs/${row.id}`)
-      if (response.code === '200') {
-        ElMessage.success('删除成功')
-        fetchJobList()
-      } else {
-        ElMessage.error(response.msg || '删除失败')
-      }
-    } catch (error) {
-      console.error('删除失败:', error)
-      ElMessage.error('删除失败')
-    }
-  }).catch(() => {
-    // 用户取消删除
+  ElMessageBox.confirm(`确定要删除岗位 "${row.name}" 吗？`, '确认删除', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
   })
+    .then(async () => {
+      try {
+        // 修正API路径，移除/admin前缀
+        const response = await request.delete(`/jobs/${row.id}`)
+        if (response.code === '200') {
+          ElMessage.success('删除成功')
+          fetchJobList()
+        } else {
+          ElMessage.error(response.msg || '删除失败')
+        }
+      } catch (error) {
+        console.error('删除失败:', error)
+        ElMessage.error('删除失败')
+      }
+    })
+    .catch(() => {
+      // 用户取消删除
+    })
 }
 
 // 处理保存
 const handleSave = async () => {
   try {
     await jobFormRef.value.validate()
-    
+
     saveLoading.value = true
-    
+
     const formData = { ...jobForm }
 
     formData.is_active = formData.is_active == 1
-    
+
     if (isEdit.value) {
       // 编辑岗位
       // 修正API路径，移除/admin前缀

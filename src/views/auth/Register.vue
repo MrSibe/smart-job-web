@@ -2,20 +2,17 @@
   <div class="register-container">
     <div class="register-box">
       <h2>用户注册</h2>
-      <el-form 
-        ref="registerFormRef" 
-        :model="registerForm" 
-        :rules="registerRules" 
-        label-width="80px" 
+      <el-form
+        ref="registerFormRef"
+        :model="registerForm"
+        :rules="registerRules"
+        label-width="80px"
         @submit.prevent="handleRegister"
       >
         <el-form-item label="手机号" prop="phone">
-          <el-input
-            v-model="registerForm.phone"
-            placeholder="请输入手机号"
-          />
+          <el-input v-model="registerForm.phone" placeholder="请输入手机号" />
         </el-form-item>
-        
+
         <el-form-item label="密码" prop="password">
           <el-input
             v-model="registerForm.password"
@@ -24,7 +21,7 @@
             show-password
           />
         </el-form-item>
-        
+
         <el-form-item label="确认密码">
           <el-input
             v-model="confirmPassword"
@@ -33,22 +30,15 @@
             show-password
           />
         </el-form-item>
-        
+
         <el-form-item>
-          <el-button 
-            type="primary" 
-            native-type="submit" 
-            class="register-btn"
-            :loading="loading"
-          >
+          <el-button type="primary" native-type="submit" class="register-btn" :loading="loading">
             注册
           </el-button>
         </el-form-item>
       </el-form>
-      
-      <div class="login-link">
-        已有账户？<router-link to="/login">立即登录</router-link>
-      </div>
+
+      <div class="login-link">已有账户？<router-link to="/login">立即登录</router-link></div>
     </div>
   </div>
 </template>
@@ -92,14 +82,14 @@ function validateConfirmPassword(rule, value, callback) {
 // 处理注册
 const handleRegister = async () => {
   if (!registerFormRef.value) return
-  
+
   await registerFormRef.value.validate(async (valid) => {
     if (!valid) return
-    
+
     loading.value = true
     try {
       const response = await request.post('/auth/register', registerForm)
-      
+
       if (response.code === '200') {
         // 注册成功
         ElMessage.success('注册成功')
@@ -201,5 +191,50 @@ const handleRegister = async () => {
 
 .login-link a:hover {
   text-decoration: underline;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .register-container {
+    width: 90%;
+    max-width: 90%;
+    padding: 30px 20px;
+    margin: 20px auto;
+  }
+
+  .register-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .register-header p {
+    font-size: 0.9rem;
+  }
+
+  .el-form-item {
+    margin-bottom: 20px;
+  }
+
+  .el-input {
+    font-size: 0.9rem;
+  }
+
+  .el-button {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  .code-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .code-wrapper :deep(.el-input) {
+    width: 100%;
+  }
+
+  .get-code-btn {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 </style>

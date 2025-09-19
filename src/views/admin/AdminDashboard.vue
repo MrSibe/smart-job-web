@@ -6,7 +6,7 @@
           <span>数据统计</span>
         </div>
       </template>
-      
+
       <div class="statistic-container">
         <el-row :gutter="20">
           <el-col :span="8">
@@ -22,7 +22,7 @@
               </div>
             </el-card>
           </el-col>
-          
+
           <el-col :span="8">
             <el-card class="statistic-item" shadow="hover">
               <div class="statistic-content">
@@ -36,7 +36,7 @@
               </div>
             </el-card>
           </el-col>
-          
+
           <el-col :span="8">
             <el-card class="statistic-item" shadow="hover">
               <div class="statistic-content">
@@ -53,14 +53,14 @@
         </el-row>
       </div>
     </el-card>
-    
+
     <el-card class="recent-card">
       <template #header>
         <div class="card-header">
           <span>最近活动</span>
         </div>
       </template>
-      
+
       <div class="recent-container">
         <el-empty v-if="recentActivities.length === 0" description="暂无活动记录" />
         <el-timeline v-else>
@@ -107,13 +107,13 @@ const fetchStatistics = async () => {
     if (jobResponse.code === '200') {
       jobCount.value = jobResponse.data
     }
-    
+
     // 获取用户数量
     const userResponse = await request.get('/admin/user/count')
     if (userResponse.code === '200') {
       userCount.value = userResponse.data
     }
-    
+
     // 获取角色数量
     const roleResponse = await request.get('/admin/role/count')
     if (roleResponse.code === '200') {

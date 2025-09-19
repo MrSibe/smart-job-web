@@ -4,31 +4,21 @@
     <NavBar />
 
     <div class="container">
-
-
       <!-- 主内容区 -->
       <div class="main-content">
-
         <!-- 左侧职位列表 -->
         <div class="job-list">
           <!-- 标题和按钮 -->
           <div class="header-section">
             <h2 class="section-title">最新岗位</h2>
-            <router-link to="/jobs" class="view-all-btn">
-              查看全部岗位
-            </router-link>
+            <router-link to="/jobs" class="view-all-btn"> 查看全部岗位 </router-link>
           </div>
-          <JobCard 
-            v-for="job in displayedJobs"
-            :key="job.id"
-            :job="job"
-          />
-          
+          <JobCard v-for="job in displayedJobs" :key="job.id" :job="job" />
+
           <div v-if="displayedJobs.length === 0 && !isLoading" class="empty-tip">
             <i class="fas fa-search"></i>
             <p>没有找到符合条件的职位</p>
           </div>
-          
         </div>
 
         <!-- 右侧学院通知 -->
@@ -67,17 +57,17 @@ import { ref, reactive, computed, onMounted } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import NavBar from '@/components/layout/NavBar.vue'
 import JobCard from '@/components/job/JobCard.vue'
-import InfoFooter from "@/components/layout/InfoFooter.vue";
-import BottleFooter from "@/components/layout/BottleFooter.vue";
-import request from '@/utils/request';
+import InfoFooter from '@/components/layout/InfoFooter.vue'
+import BottleFooter from '@/components/layout/BottleFooter.vue'
+import request from '@/utils/request'
 
 export default {
   name: 'HomePage',
-  components: {BottleFooter, NavBar, JobCard, InfoFooter },
+  components: { BottleFooter, NavBar, JobCard, InfoFooter },
   setup() {
     const searchQuery = ref('')
     const isLoading = ref(false)
-    
+
     const jobs = ref([])
     const notices = reactive([
       {
@@ -93,59 +83,58 @@ export default {
         link: 'https://xxgc.sicau.edu.cn/info/1040/1051.htm'
       }
     ])
-    
-    
+
     const filteredJobs = computed(() => {
-      const search = searchQuery.value.toLowerCase();
-      return jobs.value.filter(job =>
-        job.title.toLowerCase().includes(search) ||
-        job.company.toLowerCase().includes(search) ||
-        job.location.toLowerCase().includes(search)
-      );
+      const search = searchQuery.value.toLowerCase()
+      return jobs.value.filter(
+        (job) =>
+          job.title.toLowerCase().includes(search) ||
+          job.company.toLowerCase().includes(search) ||
+          job.location.toLowerCase().includes(search)
+      )
     })
-    
+
     const displayedJobs = computed(() => {
       // 如果有搜索查询，则显示所有匹配的结果，不分页
       if (searchQuery.value) {
-        return filteredJobs.value;
+        return filteredJobs.value
       }
-      
+
       // 默认只显示前5个岗位
-      return jobs.value.slice(0, 5);
+      return jobs.value.slice(0, 5)
     })
-    
+
     const loadJobs = async () => {
       try {
-        isLoading.value = true;
+        isLoading.value = true
         // 使用新的API端点，加载5个岗位
-        const response = await request.get('/jobs?page=1&size=5');
+        const response = await request.get('/jobs?page=1&size=5')
 
-        jobs.value = response.data.records.map(job => ({
+        jobs.value = response.data.records.map((job) => ({
           id: job.id,
-          title: job.name,           // 后端字段: name -> 前端: title
-          company: job.companyName,  // 后端字段: companyName -> 前端: company
+          title: job.name, // 后端字段: name -> 前端: title
+          company: job.companyName, // 后端字段: companyName -> 前端: company
           location: job.location,
-          job_type: job.jobType,     // 后端字段: jobType -> 前端: job_type
+          job_type: job.jobType, // 后端字段: jobType -> 前端: job_type
           salary: job.salary,
           description: job.description
-        }));
-        
+        }))
       } catch (error) {
-        console.error('数据加载失败:', error);
+        console.error('数据加载失败:', error)
       } finally {
-        isLoading.value = false;
+        isLoading.value = false
       }
     }
-    
+
     const searchJobs = () => {
       // 搜索时仍然使用所有数据进行搜索
       // 搜索逻辑已通过计算属性自动处理
     }
-    
+
     onMounted(async () => {
-      await loadJobs();
+      await loadJobs()
     })
-    
+
     return {
       searchQuery,
       isLoading,
@@ -216,7 +205,7 @@ export default {
   background: white;
   border-radius: 12px;
   padding: 25px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .board-title {
@@ -321,12 +310,66 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .home-page {
+    margin: 20px 3%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+
   .main-content {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
-  
+
   .notice-board {
     order: -1;
+    padding: 15px;
+  }
+
+  .job-list {
+    gap: 15px;
+  }
+
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+
+  .view-all-btn {
+    align-self: flex-start;
+  }
+
+  .search-box {
+    padding: 15px;
+  }
+
+  .search-input {
+    font-size: 0.9rem;
+  }
+
+  .board-title {
+    font-size: 1.2rem;
+  }
+
+  .notice-item {
+    padding: 12px;
+  }
+
+  .notice-header {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .notice-title {
+    font-size: 1rem;
+  }
+
+  .notice-date {
+    font-size: 0.8rem;
   }
 }
 </style>

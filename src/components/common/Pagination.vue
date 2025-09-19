@@ -9,7 +9,7 @@
       @current-change="handleCurrentChange"
       background
     />
-    
+
     <div class="page-info">
       第 {{ currentPage }} 页，共 {{ totalPages }} 页（共 {{ total }} 条记录）
     </div>
@@ -43,10 +43,12 @@ const currentPage = ref(props.currentPage)
 const pageSize = ref(5)
 
 // 监听props变化并更新内部状态
-watch(() => props.currentPage, (newVal) => {
-  currentPage.value = newVal
-})
-
+watch(
+  () => props.currentPage,
+  (newVal) => {
+    currentPage.value = newVal
+  }
+)
 
 // 处理当前页变化
 const handleCurrentChange = (val) => {
@@ -74,7 +76,7 @@ const handleCurrentChange = (val) => {
   .pagination-container {
     gap: 10px;
   }
-  
+
   .page-info {
     font-size: 0.8rem;
   }

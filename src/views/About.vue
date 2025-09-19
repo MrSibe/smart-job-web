@@ -9,30 +9,24 @@
         <el-card class="mb-8" shadow="hover">
           <!-- 平台简介 -->
           <div class="all-introduce prose prose-lg max-w-none mb-12 text-gray-700">
-            <h2 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold text-primary mb-6 text-center">关于我们</h2>
+            <h2 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold text-primary mb-6 text-center">
+              关于我们
+            </h2>
             <p class="text-center text-lg font-medium text-gray-800 mb-6">
               信息工程学院就业平台 —— 连接人才与未来的桥梁
             </p>
             <p class="text-center mb-4">
               我们致力于为学院学生和企业搭建沟通桥梁，提供优质的就业服务
             </p>
-            <p class="text-center mb-4">
-              汇聚众多优质企业热招岗位，助力学生开启职业发展新篇章
-            </p>
-            <p class="text-center">
-              专业教师与技术团队保驾护航，打造便捷高效的就业服务平台
-            </p>
+            <p class="text-center mb-4">汇聚众多优质企业热招岗位，助力学生开启职业发展新篇章</p>
+            <p class="text-center">专业教师与技术团队保驾护航，打造便捷高效的就业服务平台</p>
           </div>
 
           <!-- 学院简介 -->
           <div class="xxcc-introduce space-y-8">
             <h2 class="text-2xl font-bold text-primary mb-6 border-b pb-3 text-center">学院简介</h2>
 
-            <el-alert
-              :closable="false"
-              type="info"
-              class="mb-6"
-            >
+            <el-alert :closable="false" type="info" class="mb-6">
               <p class="text-gray-700 leading-relaxed text-center mb-4">
                 信息工程学院位于雅安校区，其前身是1985年成立的校实验中心计算机室，
                 1995年并入新成立的工程技术学院；2002年更名为信息与工程技术学院；
@@ -87,7 +81,9 @@
                 </div>
               </template>
               <div>
-                <p class="text-gray-700 leading-relaxed text-center mb-4">教师主持、主研各类科研项目60余项；发表论文260余篇，其中SCI收录论文100余篇；出版教材、专著20余部，获授权专利80余项，软件著作权90余项。</p>
+                <p class="text-gray-700 leading-relaxed text-center mb-4">
+                  教师主持、主研各类科研项目60余项；发表论文260余篇，其中SCI收录论文100余篇；出版教材、专著20余部，获授权专利80余项，软件著作权90余项。
+                </p>
               </div>
             </el-card>
 
@@ -144,17 +140,17 @@
 <script>
 import { ElCard, ElAlert } from 'element-plus'
 import NavBar from '@/components/layout/NavBar.vue'
-import InfoFooter from "@/components/layout/InfoFooter.vue";
-import BottleFooter from "@/components/layout/BottleFooter.vue";
+import InfoFooter from '@/components/layout/InfoFooter.vue'
+import BottleFooter from '@/components/layout/BottleFooter.vue'
 
 export default {
   name: 'AboutPage',
-  components: { 
-    ElCard, 
+  components: {
+    ElCard,
     ElAlert,
-    BottleFooter, 
-    NavBar, 
-    InfoFooter 
+    BottleFooter,
+    NavBar,
+    InfoFooter
   }
 }
 </script>
@@ -205,15 +201,15 @@ export default {
   .about-page {
     margin: 20px 5%;
   }
-  
+
   .container {
     padding: 0 15px;
   }
-  
+
   .about-content {
     padding: 20px 0;
   }
-  
+
   :deep(.grid) {
     grid-template-columns: 1fr;
   }

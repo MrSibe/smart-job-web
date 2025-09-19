@@ -31,19 +31,11 @@
           <el-option label="启用" value="1" />
           <el-option label="禁用" value="0" />
         </el-select>
-        <el-button type="primary" @click="handleFilter">
-          搜索
-        </el-button>
-        <el-button @click="resetFilter">
-          重置
-        </el-button>
+        <el-button type="primary" @click="handleFilter"> 搜索 </el-button>
+        <el-button @click="resetFilter"> 重置 </el-button>
       </div>
 
-      <el-table
-        :data="userList"
-        v-loading="loading"
-        style="width: 100%; margin-top: 20px"
-      >
+      <el-table :data="userList" v-loading="loading" style="width: 100%; margin-top: 20px">
         <el-table-column prop="id" label="ID" width="80" />
         <el-table-column prop="phone" label="手机号" width="120" />
         <el-table-column prop="nickname" label="昵称" width="120" />
@@ -77,9 +69,7 @@
             >
               {{ row.status === 1 ? '禁用' : '启用' }}
             </el-button>
-            <el-button size="small" type="danger" @click="handleDelete(row)">
-              删除
-            </el-button>
+            <el-button size="small" type="danger" @click="handleDelete(row)"> 删除 </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -98,36 +88,16 @@
     </el-card>
 
     <!-- 用户编辑对话框 -->
-    <el-dialog
-      :title="dialogTitle"
-      v-model="dialogVisible"
-      width="500px"
-      @close="resetForm"
-    >
-      <el-form
-        ref="userFormRef"
-        :model="userForm"
-        :rules="userRules"
-        label-width="80px"
-      >
+    <el-dialog :title="dialogTitle" v-model="dialogVisible" width="500px" @close="resetForm">
+      <el-form ref="userFormRef" :model="userForm" :rules="userRules" label-width="80px">
         <el-form-item label="手机号" prop="phone">
-          <el-input
-            v-model="userForm.phone"
-            placeholder="请输入手机号"
-            :disabled="isEdit"
-          />
+          <el-input v-model="userForm.phone" placeholder="请输入手机号" :disabled="isEdit" />
         </el-form-item>
         <el-form-item label="昵称" prop="nickname">
-          <el-input
-            v-model="userForm.nickname"
-            placeholder="请输入昵称"
-          />
+          <el-input v-model="userForm.nickname" placeholder="请输入昵称" />
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
-          <el-input
-            v-model="userForm.email"
-            placeholder="请输入邮箱"
-          />
+          <el-input v-model="userForm.email" placeholder="请输入邮箱" />
         </el-form-item>
         <el-form-item label="密码" prop="password" v-if="!isEdit">
           <el-input
@@ -161,9 +131,7 @@
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitForm" :loading="submitting">
-          确定
-        </el-button>
+        <el-button type="primary" @click="submitForm" :loading="submitting"> 确定 </el-button>
       </template>
     </el-dialog>
   </div>
@@ -212,9 +180,7 @@ const userRules = {
     { required: true, message: '请输入昵称', trigger: 'blur' },
     { min: 2, max: 20, message: '昵称长度在2-20个字符之间', trigger: 'blur' }
   ],
-  email: [
-    { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
-  ],
+  email: [{ type: 'email', message: '邮箱格式不正确', trigger: 'blur' }],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
@@ -319,15 +285,11 @@ const handleStatusChange = async (row) => {
 
 const handleDelete = async (row) => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除用户 ${row.nickname} 吗？此操作不可恢复。`,
-      '警告',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'error'
-      }
-    )
+    await ElMessageBox.confirm(`确定要删除用户 ${row.nickname} 吗？此操作不可恢复。`, '警告', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'error'
+    })
 
     await request.delete(`/users/${row.id}`)
 

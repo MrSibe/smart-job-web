@@ -5,8 +5,8 @@
         <h2>管理端登录</h2>
         <p>请输入您的手机号和密码</p>
       </div>
-      
-      <el-form 
+
+      <el-form
         ref="loginFormRef"
         :model="loginForm"
         :rules="loginRules"
@@ -14,19 +14,13 @@
         @keyup.enter="handleLogin"
       >
         <el-form-item prop="phone">
-          <el-input
-            v-model="loginForm.phone"
-            placeholder="请输入手机号"
-            size="large"
-            clearable
-          >
+          <el-input v-model="loginForm.phone" placeholder="请输入手机号" size="large" clearable>
             <template #prefix>
               <el-icon><Iphone /></el-icon>
             </template>
           </el-input>
         </el-form-item>
 
-        
         <el-form-item prop="password">
           <el-input
             v-model="loginForm.password"
@@ -40,7 +34,7 @@
             </template>
           </el-input>
         </el-form-item>
-        
+
         <el-form-item>
           <el-button
             type="primary"
@@ -95,9 +89,9 @@ const loading = ref(false)
 const handleLogin = async () => {
   try {
     await loginFormRef.value.validate()
-    
+
     loading.value = true
-    
+
     // 发送登录请求
     const response = await request.post('/auth/login', loginForm)
 

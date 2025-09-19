@@ -2,12 +2,12 @@
   <nav class="navbar">
     <div class="container">
       <router-link to="/" class="brand">
-        <img src="@/assets/logo.png" alt="学院logo" class="logo">
+        <img src="@/assets/logo.png" alt="学院logo" class="logo" />
         <span class="title">信息工程学院就业平台</span>
       </router-link>
-      
+
       <div class="nav-items">
-        <router-link 
+        <router-link
           v-for="item in navLinks"
           :key="item.path"
           :to="item.path"
@@ -17,21 +17,43 @@
           {{ item.text }}
         </router-link>
       </div>
-      
+
       <div class="user-actions">
         <div v-if="isLoggedIn" class="user-info">
           <span class="welcome-text">欢迎，{{ username }}</span>
-          <button class="logout-btn" @click="handleLogout">
-            退出登录
-          </button>
+          <button class="logout-btn" @click="handleLogout">退出登录</button>
         </div>
         <div v-else class="auth-actions">
-          <router-link to="/login" class="login-btn">
-            登录
-          </router-link>
-          <router-link to="/register" class="register-btn">
-            注册
-          </router-link>
+          <router-link to="/login" class="login-btn"> 登录 </router-link>
+          <router-link to="/register" class="register-btn"> 注册 </router-link>
+        </div>
+
+        <!-- 移动端汉堡菜单按钮 -->
+        <button class="mobile-menu-btn" @click="showMobileMenu = !showMobileMenu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- 移动端菜单 -->
+      <div v-if="showMobileMenu" class="mobile-menu-overlay" @click="showMobileMenu = false">
+        <div class="mobile-menu" @click.stop>
+          <div class="mobile-menu-header">
+            <span>菜单</span>
+            <button class="close-btn" @click="showMobileMenu = false">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="mobile-nav-items">
+            <router-link
+              v-for="item in navLinks"
+              :key="item.path"
+              :to="item.path"
+              class="mobile-nav-link"
+              @click="showMobileMenu = false"
+            >
+              {{ item.text }}
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -51,7 +73,8 @@ export default {
         { path: '/about', text: '关于我们' }
       ],
       isLoggedIn: false,
-      username: ''
+      username: '',
+      showMobileMenu: false
     }
   },
   mounted() {
@@ -103,9 +126,9 @@ export default {
 
 <style scoped>
 .navbar {
-  background: #4A90E2;
+  background: #4a90e2;
   padding: 1rem 0;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -140,7 +163,7 @@ export default {
 }
 
 .nav-link {
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   transition: color 0.3s;
 }
@@ -156,6 +179,16 @@ export default {
   gap: 15px;
 }
 
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px;
+}
+
 .user-info {
   display: flex;
   align-items: center;
@@ -168,9 +201,9 @@ export default {
 }
 
 .logout-btn {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 5px 15px;
   border-radius: 15px;
   cursor: pointer;
@@ -179,8 +212,8 @@ export default {
 }
 
 .logout-btn:hover {
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .auth-actions {
@@ -188,7 +221,8 @@ export default {
   gap: 10px;
 }
 
-.login-btn, .register-btn {
+.login-btn,
+.register-btn {
   color: white;
   text-decoration: none;
   padding: 6px 20px;
@@ -198,8 +232,8 @@ export default {
 }
 
 .login-btn {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .register-btn {
@@ -208,8 +242,8 @@ export default {
 }
 
 .login-btn:hover {
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .register-btn:hover {
@@ -221,9 +255,110 @@ export default {
   .nav-items {
     display: none;
   }
-  
+
   .container {
     padding: 0 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .brand {
+    order: 1;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .user-actions {
+    order: 2;
+  }
+
+  .title {
+    font-size: 1rem;
+    display: none;
+  }
+
+  .logo {
+    height: 30px;
+  }
+
+  .welcome-text {
+    font-size: 0.8rem;
+  }
+
+  .logout-btn {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+  }
+
+  .login-btn,
+  .register-btn {
+    padding: 4px 12px;
+    font-size: 0.8rem;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .mobile-menu {
+    width: 70%;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu-header {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #4a90e2;
+    color: white;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .mobile-nav-items {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    padding: 1rem 0;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+  }
+
+  .mobile-nav-link:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-nav-link:hover {
+    color: #4a90e2;
   }
 }
 </style>

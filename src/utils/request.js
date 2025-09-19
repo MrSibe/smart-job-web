@@ -9,7 +9,7 @@ const request = axios.create({
 
 // 请求拦截器
 request.interceptors.request.use(
-  config => {
+  (config) => {
     // 从localStorage中获取token（如果有）
     const token = localStorage.getItem('accessToken')
     if (token) {
@@ -18,7 +18,7 @@ request.interceptors.request.use(
     }
     return config
   },
-  error => {
+  (error) => {
     // 请求错误处理
     console.error('请求错误:', error)
     return Promise.reject(error)
@@ -27,9 +27,9 @@ request.interceptors.request.use(
 
 // 响应拦截器
 request.interceptors.response.use(
-  response => {
+  (response) => {
     // 后端API返回 {code, data, msg} 格式
-    if (response.data && response.data.code === "200") {
+    if (response.data && response.data.code === '200') {
       // 返回完整的响应数据，包括code、data、msg
       return response.data
     } else {
@@ -37,7 +37,7 @@ request.interceptors.response.use(
       return Promise.reject(new Error(response.data.msg || '请求失败'))
     }
   },
-  error => {
+  (error) => {
     // 响应错误处理
     console.error('响应错误:', error)
     if (error.response && error.response.status === 401) {

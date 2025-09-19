@@ -21,10 +21,7 @@
 
     <div class="card-footer">
       <p class="description">{{ job.description }}</p>
-      <router-link 
-        :to="`/jobs/${job.id}`"
-        class="detail-btn"
-      >
+      <router-link :to="`/jobs/${job.id}`" class="detail-btn">
         查看详情 <i class="fas fa-arrow-right"></i>
       </router-link>
     </div>
@@ -39,15 +36,9 @@ export default {
       type: Object,
       required: true,
       validator: (value) => {
-        return [
-          'id', 
-          'title', 
-          'company', 
-          'location', 
-          'job_type', 
-          'salary', 
-          'description'
-        ].every(key => key in value)
+        return ['id', 'title', 'company', 'location', 'job_type', 'salary', 'description'].every(
+          (key) => key in value
+        )
       }
     }
   }
@@ -60,7 +51,9 @@ export default {
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .job-card:hover {
@@ -154,7 +147,7 @@ export default {
     flex-direction: column;
     gap: 12px;
   }
-  
+
   .job-card {
     padding: 20px;
   }

@@ -37,12 +37,12 @@ export const useAuthStore = defineStore('auth', () => {
 
   // 检查是否有任一权限
   const hasAnyPermission = (permissionList) => {
-    return permissionList.some(perm => permissions.value.includes(perm))
+    return permissionList.some((perm) => permissions.value.includes(perm))
   }
 
   // 检查是否有所有权限
   const hasAllPermissions = (permissionList) => {
-    return permissionList.every(perm => permissions.value.includes(perm))
+    return permissionList.every((perm) => permissions.value.includes(perm))
   }
 
   // 检查是否有指定角色
@@ -52,7 +52,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   // 检查是否有任一角色
   const hasAnyRole = (roleList) => {
-    return roleList.some(role => roles.value.includes(role))
+    return roleList.some((role) => roles.value.includes(role))
   }
 
   // 检查是否是管理员

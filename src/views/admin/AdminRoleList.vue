@@ -31,19 +31,11 @@
           <el-option label="启用" value="1" />
           <el-option label="禁用" value="0" />
         </el-select>
-        <el-button type="primary" @click="handleFilter">
-          搜索
-        </el-button>
-        <el-button @click="resetFilter">
-          重置
-        </el-button>
+        <el-button type="primary" @click="handleFilter"> 搜索 </el-button>
+        <el-button @click="resetFilter"> 重置 </el-button>
       </div>
 
-      <el-table
-        :data="roleList"
-        v-loading="loading"
-        style="width: 100%; margin-top: 20px"
-      >
+      <el-table :data="roleList" v-loading="loading" style="width: 100%; margin-top: 20px">
         <el-table-column prop="id" label="ID" width="80" />
         <el-table-column prop="name" label="角色名称" width="120" />
         <el-table-column prop="code" label="角色编码" width="120" />
@@ -59,13 +51,7 @@
         <el-table-column label="操作" width="200" fixed="right">
           <template #default="{ row }">
             <el-button size="small" @click="handleEdit(row)">编辑</el-button>
-            <el-button
-              size="small"
-              type="primary"
-              @click="handlePermission(row)"
-            >
-              权限
-            </el-button>
+            <el-button size="small" type="primary" @click="handlePermission(row)"> 权限 </el-button>
             <el-button
               size="small"
               :type="row.status === 1 ? 'danger' : 'success'"
@@ -73,9 +59,7 @@
             >
               {{ row.status === 1 ? '禁用' : '启用' }}
             </el-button>
-            <el-button size="small" type="danger" @click="handleDelete(row)">
-              删除
-            </el-button>
+            <el-button size="small" type="danger" @click="handleDelete(row)"> 删除 </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -94,30 +78,13 @@
     </el-card>
 
     <!-- 角色编辑对话框 -->
-    <el-dialog
-      :title="dialogTitle"
-      v-model="dialogVisible"
-      width="500px"
-      @close="resetForm"
-    >
-      <el-form
-        ref="roleFormRef"
-        :model="roleForm"
-        :rules="roleRules"
-        label-width="80px"
-      >
+    <el-dialog :title="dialogTitle" v-model="dialogVisible" width="500px" @close="resetForm">
+      <el-form ref="roleFormRef" :model="roleForm" :rules="roleRules" label-width="80px">
         <el-form-item label="角色名称" prop="name">
-          <el-input
-            v-model="roleForm.name"
-            placeholder="请输入角色名称"
-          />
+          <el-input v-model="roleForm.name" placeholder="请输入角色名称" />
         </el-form-item>
         <el-form-item label="角色编码" prop="code">
-          <el-input
-            v-model="roleForm.code"
-            placeholder="请输入角色编码"
-            :disabled="isEdit"
-          />
+          <el-input v-model="roleForm.code" placeholder="请输入角色编码" :disabled="isEdit" />
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-radio-group v-model="roleForm.status">
@@ -136,18 +103,12 @@
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitForm" :loading="submitting">
-          确定
-        </el-button>
+        <el-button type="primary" @click="submitForm" :loading="submitting"> 确定 </el-button>
       </template>
     </el-dialog>
 
     <!-- 权限分配对话框 -->
-    <el-dialog
-      title="权限分配"
-      v-model="permissionDialogVisible"
-      width="600px"
-    >
+    <el-dialog title="权限分配" v-model="permissionDialogVisible" width="600px">
       <el-tree
         ref="permissionTreeRef"
         :data="permissionTreeData"
@@ -158,9 +119,7 @@
       />
       <template #footer>
         <el-button @click="permissionDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="savePermissions" :loading="submitting">
-          保存
-        </el-button>
+        <el-button type="primary" @click="savePermissions" :loading="submitting"> 保存 </el-button>
       </template>
     </el-dialog>
   </div>
@@ -321,15 +280,11 @@ const handleStatusChange = async (row) => {
 
 const handleDelete = async (row) => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除角色 ${row.name} 吗？此操作不可恢复。`,
-      '警告',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'error'
-      }
-    )
+    await ElMessageBox.confirm(`确定要删除角色 ${row.name} 吗？此操作不可恢复。`, '警告', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'error'
+    })
 
     await request.delete(`/roles/${row.id}`)
 

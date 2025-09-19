@@ -41,12 +41,8 @@
           <el-option label="启用" value="1" />
           <el-option label="禁用" value="0" />
         </el-select>
-        <el-button type="primary" @click="handleFilter">
-          搜索
-        </el-button>
-        <el-button @click="resetFilter">
-          重置
-        </el-button>
+        <el-button type="primary" @click="handleFilter"> 搜索 </el-button>
+        <el-button @click="resetFilter"> 重置 </el-button>
       </div>
 
       <el-table
@@ -86,9 +82,7 @@
             >
               {{ row.status === 1 ? '禁用' : '启用' }}
             </el-button>
-            <el-button size="small" type="danger" @click="handleDelete(row)">
-              删除
-            </el-button>
+            <el-button size="small" type="danger" @click="handleDelete(row)"> 删除 </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -107,12 +101,7 @@
     </el-card>
 
     <!-- 权限编辑对话框 -->
-    <el-dialog
-      :title="dialogTitle"
-      v-model="dialogVisible"
-      width="500px"
-      @close="resetForm"
-    >
+    <el-dialog :title="dialogTitle" v-model="dialogVisible" width="500px" @close="resetForm">
       <el-form
         ref="permissionFormRef"
         :model="permissionForm"
@@ -120,23 +109,13 @@
         label-width="80px"
       >
         <el-form-item label="权限名称" prop="name">
-          <el-input
-            v-model="permissionForm.name"
-            placeholder="请输入权限名称"
-          />
+          <el-input v-model="permissionForm.name" placeholder="请输入权限名称" />
         </el-form-item>
         <el-form-item label="权限编码" prop="code">
-          <el-input
-            v-model="permissionForm.code"
-            placeholder="请输入权限编码"
-          />
+          <el-input v-model="permissionForm.code" placeholder="请输入权限编码" />
         </el-form-item>
         <el-form-item label="权限类型" prop="type">
-          <el-select
-            v-model="permissionForm.type"
-            placeholder="请选择权限类型"
-            style="width: 100%"
-          >
+          <el-select v-model="permissionForm.type" placeholder="请选择权限类型" style="width: 100%">
             <el-option label="菜单" value="MENU" />
             <el-option label="按钮" value="BUTTON" />
             <el-option label="接口" value="API" />
@@ -153,16 +132,10 @@
           />
         </el-form-item>
         <el-form-item label="路径" prop="path">
-          <el-input
-            v-model="permissionForm.path"
-            placeholder="请输入路径"
-          />
+          <el-input v-model="permissionForm.path" placeholder="请输入路径" />
         </el-form-item>
         <el-form-item label="图标" prop="icon">
-          <el-input
-            v-model="permissionForm.icon"
-            placeholder="请输入图标名称"
-          />
+          <el-input v-model="permissionForm.icon" placeholder="请输入图标名称" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input-number
@@ -190,9 +163,7 @@
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitForm" :loading="submitting">
-          确定
-        </el-button>
+        <el-button type="primary" @click="submitForm" :loading="submitting"> 确定 </el-button>
       </template>
     </el-dialog>
   </div>
@@ -245,9 +216,7 @@ const permissionRules = {
     { required: true, message: '请输入权限编码', trigger: 'blur' },
     { pattern: /^[a-zA-Z_][a-zA-Z0-9_:]*$/, message: '权限编码格式不正确', trigger: 'blur' }
   ],
-  type: [
-    { required: true, message: '请选择权限类型', trigger: 'change' }
-  ]
+  type: [{ required: true, message: '请选择权限类型', trigger: 'change' }]
 }
 
 const dialogTitle = computed(() => {
@@ -256,18 +225,18 @@ const dialogTitle = computed(() => {
 
 const getTypeText = (type) => {
   const typeMap = {
-    'MENU': '菜单',
-    'BUTTON': '按钮',
-    'API': '接口'
+    MENU: '菜单',
+    BUTTON: '按钮',
+    API: '接口'
   }
   return typeMap[type] || type
 }
 
 const getTypeTagType = (type) => {
   const typeTagMap = {
-    'MENU': 'primary',
-    'BUTTON': 'success',
-    'API': 'warning'
+    MENU: 'primary',
+    BUTTON: 'success',
+    API: 'warning'
   }
   return typeTagMap[type] || 'info'
 }
@@ -371,15 +340,11 @@ const handleStatusChange = async (row) => {
 
 const handleDelete = async (row) => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除权限 ${row.name} 吗？此操作不可恢复。`,
-      '警告',
-      {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'error'
-      }
-    )
+    await ElMessageBox.confirm(`确定要删除权限 ${row.name} 吗？此操作不可恢复。`, '警告', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'error'
+    })
 
     await request.delete(`/permissions/${row.id}`)
 

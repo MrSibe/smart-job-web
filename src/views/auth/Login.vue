@@ -2,20 +2,15 @@
   <div class="login-container">
     <div class="login-box">
       <h2>用户登录</h2>
-      <el-form 
-        ref="loginFormRef" 
-        :model="loginForm" 
-        :rules="loginRules" 
-        label-width="80px" 
+      <el-form
+        ref="loginFormRef"
+        :model="loginForm"
+        :rules="loginRules"
+        label-width="80px"
         @submit.prevent="handleLogin"
       >
         <el-form-item label="手机号" prop="phone">
-          <el-input
-            v-model="loginForm.phone"
-            placeholder="请输入手机号"
-            type="text"
-            clearable
-          />
+          <el-input v-model="loginForm.phone" placeholder="请输入手机号" type="text" clearable />
         </el-form-item>
 
         <el-form-item label="密码" prop="password">
@@ -26,19 +21,14 @@
             show-password
           />
         </el-form-item>
-        
+
         <el-form-item>
-          <el-button 
-            type="primary" 
-            native-type="submit" 
-            :loading="loading"
-            class="login-btn"
-          >
+          <el-button type="primary" native-type="submit" :loading="loading" class="login-btn">
             登录
           </el-button>
         </el-form-item>
       </el-form>
-      
+
       <div class="register-link">
         还没有账户？<router-link to="/register">立即注册</router-link>
       </div>
@@ -82,10 +72,10 @@ const loading = ref(false)
 // 处理登录
 const handleLogin = async () => {
   if (!loginFormRef.value) return
-  
+
   await loginFormRef.value.validate(async (valid) => {
     if (!valid) return
-    
+
     loading.value = true
     try {
       const response = await request.post('/auth/login', loginForm)
@@ -168,5 +158,50 @@ const handleLogin = async () => {
 
 .register-link a:hover {
   text-decoration: underline;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .login-container {
+    width: 90%;
+    max-width: 90%;
+    padding: 30px 20px;
+    margin: 20px auto;
+  }
+
+  .login-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .login-header p {
+    font-size: 0.9rem;
+  }
+
+  .el-form-item {
+    margin-bottom: 20px;
+  }
+
+  .el-input {
+    font-size: 0.9rem;
+  }
+
+  .el-button {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  .code-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .code-wrapper :deep(.el-input) {
+    width: 100%;
+  }
+
+  .get-code-btn {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 </style>

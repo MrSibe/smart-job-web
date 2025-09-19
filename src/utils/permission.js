@@ -33,13 +33,13 @@ const hasPermission = async (permission) => {
 // 检查是否有任一权限
 const hasAnyPermission = async (permissions) => {
   const userPerms = await getCurrentUserPermissions()
-  return permissions.some(perm => userPerms.includes(perm))
+  return permissions.some((perm) => userPerms.includes(perm))
 }
 
 // 检查是否有所有权限
 const hasAllPermissions = async (permissions) => {
   const userPerms = await getCurrentUserPermissions()
-  return permissions.every(perm => userPerms.includes(perm))
+  return permissions.every((perm) => userPerms.includes(perm))
 }
 
 // 检查是否有指定角色
@@ -55,7 +55,7 @@ const hasAnyRole = async (roles) => {
   if (!userRoles) {
     await getCurrentUserPermissions()
   }
-  return roles.some(role => userRoles.includes(role))
+  return roles.some((role) => userRoles.includes(role))
 }
 
 // 清除权限缓存

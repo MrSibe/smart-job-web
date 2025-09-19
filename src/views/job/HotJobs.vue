@@ -22,17 +22,13 @@
       <div class="main-content">
         <!-- 左侧职位列表 -->
         <div class="job-list">
-          <JobCard 
-            v-for="job in displayedJobs"
-            :key="job.id"
-            :job="job"
-          />
-          
+          <JobCard v-for="job in displayedJobs" :key="job.id" :job="job" />
+
           <div v-if="displayedJobs.length === 0 && !isLoading" class="empty-tip">
             <i class="fas fa-search"></i>
             <p>没有找到符合条件的职位</p>
           </div>
-          
+
           <!-- 分页组件 -->
           <div class="pagination-wrapper" v-if="totalPages > 1">
             <el-pagination
@@ -68,52 +64,53 @@ import { ref, reactive, computed, onMounted } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import NavBar from '@/components/layout/NavBar.vue'
 import JobCard from '@/components/job/JobCard.vue'
-import InfoFooter from "@/components/layout/InfoFooter.vue";
-import BottleFooter from "@/components/layout/BottleFooter.vue";
-import request from '@/utils/request';
+import InfoFooter from '@/components/layout/InfoFooter.vue'
+import BottleFooter from '@/components/layout/BottleFooter.vue'
+import request from '@/utils/request'
 
 export default {
   name: 'HotJobs',
-  components: {BottleFooter, NavBar, JobCard, InfoFooter },
+  components: { BottleFooter, NavBar, JobCard, InfoFooter },
   setup() {
     const searchQuery = ref('')
     const isLoading = ref(false)
-    
+
     const jobs = ref([])
-    
+
     // 分页相关数据
     const currentPage = ref(1)
     const pageSize = ref(15)
     const totalJobs = ref(0)
     const totalPages = ref(0)
-    
+
     const filteredJobs = computed(() => {
-      const search = searchQuery.value.toLowerCase();
-      return jobs.value.filter(job =>
-        job.title.toLowerCase().includes(search) ||
-        job.company.toLowerCase().includes(search) ||
-        job.location.toLowerCase().includes(search)
-      );
+      const search = searchQuery.value.toLowerCase()
+      return jobs.value.filter(
+        (job) =>
+          job.title.toLowerCase().includes(search) ||
+          job.company.toLowerCase().includes(search) ||
+          job.location.toLowerCase().includes(search)
+      )
     })
-    
+
     const displayedJobs = computed(() => {
       // 如果有搜索查询，则显示所有匹配的结果，不分页
       if (searchQuery.value) {
-        return filteredJobs.value;
+        return filteredJobs.value
       }
-      
+
       // 如果是分页查询，直接返回从后端获取的数据
-      return jobs.value;
+      return jobs.value
     })
-    
+
     const loadJobs = async () => {
       try {
-        isLoading.value = true;
-        const response = await request.get(`/jobs?page=${currentPage.value}&size=${pageSize.value}`);
+        isLoading.value = true
+        const response = await request.get(`/jobs?page=${currentPage.value}&size=${pageSize.value}`)
 
         if (response.data && response.data.records) {
           // 映射后端字段到前端字段
-          jobs.value = response.data.records.map(job => ({
+          jobs.value = response.data.records.map((job) => ({
             id: job.id,
             title: job.name,
             company: job.companyName,
@@ -121,36 +118,36 @@ export default {
             job_type: job.jobType,
             salary: job.salary,
             description: job.description
-          }));
+          }))
 
           // 设置分页信息
-          totalJobs.value = response.data.total;
-          totalPages.value = response.data.pages;
+          totalJobs.value = response.data.total
+          totalPages.value = response.data.pages
         } else {
-          console.error('获取岗位列表失败:', response.msg);
+          console.error('获取岗位列表失败:', response.msg)
         }
       } catch (error) {
-        console.error('数据加载失败:', error);
+        console.error('数据加载失败:', error)
       } finally {
-        isLoading.value = false;
+        isLoading.value = false
       }
     }
-    
+
     const handlePageChange = async (page) => {
-      currentPage.value = page;
-      await loadJobs();
+      currentPage.value = page
+      await loadJobs()
     }
-    
+
     const searchJobs = () => {
       // 搜索时重置到第一页
-      currentPage.value = 1;
+      currentPage.value = 1
       // 搜索逻辑已通过计算属性自动处理
     }
-    
+
     onMounted(async () => {
-      await loadJobs();
+      await loadJobs()
     })
-    
+
     return {
       searchQuery,
       isLoading,
@@ -196,7 +193,7 @@ export default {
 .search-box {
   display: flex;
   gap: 15px;
-  margin: 30px 0;
+  margin: 10px 0;
   width: 100%;
 }
 
@@ -214,13 +211,12 @@ export default {
 .search-input {
   flex: 1;
   padding: 12px 25px;
-  border: 2px solid #e0e0e0;
+  border: none;
   border-radius: 30px;
   font-size: 16px;
 }
 
 .search-input:focus {
-  border-color: #42b983;
   outline: none;
 }
 
@@ -265,22 +261,22 @@ export default {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin: 30px 0;
+  margin: 30px 0 70px 0;
 }
 
 @media (max-width: 768px) {
   .main-content {
     grid-template-columns: 1fr;
   }
-  
+
   .notice-board {
     order: -1;
   }
-  
+
   .job-list {
     grid-template-columns: 1fr;
   }
-  
+
   .container {
     padding: 0 15px;
   }
@@ -293,8 +289,50 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .hot-jobs-page {
+    margin: 20px 3%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+
   .job-list {
     grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .search-box {
+    padding: 15px;
+  }
+
+  .search-input {
+    font-size: 0.9rem;
+  }
+
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+
+  .pagination-container {
+    padding: 15px 0;
+  }
+
+  .el-pagination {
+    justify-content: center;
+  }
+
+  .el-pagination .btn-prev,
+  .el-pagination .btn-next,
+  .el-pagination .number {
+    min-width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 0.8rem;
   }
 }
 </style>

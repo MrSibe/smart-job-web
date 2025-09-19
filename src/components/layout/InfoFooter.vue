@@ -23,11 +23,11 @@
         <div class="qr-codes-wrapper">
           <div class="qr-code-container">
             <span>微信公众</span>
-            <img src="@/assets/wechat_qr.png" alt="微信二维码">
+            <img src="@/assets/wechat_qr.png" alt="微信二维码" />
           </div>
           <div class="qr-code-container">
             <span>新浪微博</span>
-            <img src="@/assets/weibo_qr.png" alt="微博二维码">
+            <img src="@/assets/weibo_qr.png" alt="微博二维码" />
           </div>
         </div>
       </div>
@@ -138,7 +138,7 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .link-section,
   .contact-section,
   .follow-section {
